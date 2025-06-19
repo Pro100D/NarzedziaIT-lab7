@@ -1,0 +1,12 @@
+name: Conditional Workflow
+
+on:
+  push:
+    paths:
+      - 'src/**'
+
+jobs:
+  react-to-src-change:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Zmieniono plik w src/"
