@@ -1,12 +1,23 @@
-- name: Build site
-  run: |
-    npm install
-    npm run build
+name: Build and Deploy via FTP
 
-- name: Upload via FTP
-  uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-  with:
-    server: ${{ secrets.FTP_SERVER }}
-    username: ${{ secrets.FTP_USERNAME }}
-    password: ${{ secrets.FTP_PASSWORD }}
-    local-dir: .dist/
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build site
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: .dist/
